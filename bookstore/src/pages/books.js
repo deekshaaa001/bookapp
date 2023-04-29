@@ -35,7 +35,7 @@ const Books = () => {
         <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5">
           {books.map((book) => (
             <div
-              key={book.id}
+              key={book._id}
               className="bg-gray-200 rounded-lg over-flow-auto shadow-lg p-2 flex flex-col"
             >
               <div className="h-3/4 overflow-hidden">
@@ -58,7 +58,7 @@ const Books = () => {
                     ${book.price}
                   </p>
                   <div className="flex">
-                    <Link to="/updatebook">
+                  <Link to={`/updatebook/${book._id}`}>
                       <button className="bg-gray-900 hover:bg-blue-400 hover:text-gray-800 text-white font-bold py-2 px-4 rounded mr-2">
                         Update
                       </button>
@@ -66,7 +66,7 @@ const Books = () => {
 
                     <button
                       className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleDelete(book.id)}
+                      onClick={() => handleDelete(book._id)}
                     
                     >
                       Delete

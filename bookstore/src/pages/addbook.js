@@ -35,7 +35,7 @@ const AddBook = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('("http://localhost:5000/books")', {
+            const response = await axios.post("http://localhost:5000/books", {
                 name,
                 author,
                 description,
