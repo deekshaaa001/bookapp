@@ -1,14 +1,33 @@
-import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
 import axios from 'axios';
 
-const AddBook = () => {
+const UpdateBook = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [name, setName] = useState('');
     const [author, setAuthor] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
+
+    const { id } = useParams();
+
+    useEffect(() => {
+        const fetchBook = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/books/${id}`);
+                const { name, author, description, price, image } = response.data;
+                setName(name);
+                setAuthor(author);
+                setDescription(description);
+                setPrice(price);
+                setImage(image);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchBook();
+    }, [id]);
 
     const handleNameChange = (event) => {
         setName(event.target.value);
@@ -18,7 +37,7 @@ const AddBook = () => {
         setAuthor(event.target.value);
     };
 
-        const handleDescriptionChange = (event) => {
+    const handleDescriptionChange = (event) => {
         setDescription(event.target.value);
     };
 
@@ -30,12 +49,10 @@ const AddBook = () => {
         setImage(event.target.value);
     };
 
-    
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('("http://localhost:5000/books")', {
+            const response = await axios.put(`http://localhost:5000/books/${id}`, {
                 name,
                 author,
                 description,
@@ -43,7 +60,6 @@ const AddBook = () => {
                 image,
             });
             console.log(response.data);
-
         } catch (error) {
             console.log(error);
         }
@@ -52,10 +68,11 @@ const AddBook = () => {
     if (isAuthenticated) {
         return <Navigate to="/login" />;
     }
+
     return (
         <div className="flex justify-center">
-            <form onSubmit= {handleSubmit} className="w-1/2">
-                <button className="text-2xl font-bold mb-4">Add a Book</button>
+            <form onSubmit={handleSubmit} className="w-1/2">
+                <button className="text-2xl font-bold mb-4">Update a Book</button>
                 <div className="mb-4">
                     <label className="block font-bold text-gray-700 mb-2" htmlFor="name">
                         Name
@@ -127,7 +144,7 @@ const AddBook = () => {
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         onClick={() => handleSubmit()}
                     >
-                        Add Book
+                        Update Book
                     </button>
                 </div>
             </form>
@@ -135,4 +152,5 @@ const AddBook = () => {
     );
 };
 
-export default AddBook;
+export default UpdateBook;
+

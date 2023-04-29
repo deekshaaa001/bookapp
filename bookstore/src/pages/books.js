@@ -58,13 +58,11 @@ const Books = () => {
                     ${book.price}
                   </p>
                   <div className="flex">
-                    <Link to={`/books/${book.id}`}>
+                    <Link to="/updatebook">
                       <button className="bg-gray-900 hover:bg-blue-400 hover:text-gray-800 text-white font-bold py-2 px-4 rounded mr-2">
                         Update
                       </button>
                     </Link>
-
-      
 
                     <button
                       className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
